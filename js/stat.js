@@ -11,12 +11,22 @@ var COLUMN_GAP = 50;
 var BAR_WIDTH = 40;
 var BAR_HEIGHT = -150;
 
-var renderCloud = function(ctx, x, y, color) {
+var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
 };
 
-window.renderStatistics = function(ctx, players, times) {
+var getMaxElement = function (array) {
+  var maxElement = array[0];
+  for (var i = 1; i < array.length; i++) {
+    if (array[i] > maxElement) {
+      maxElement = array[i];
+    }
+  }
+  return maxElement;
+};
+
+window.renderStatistics = function (ctx, players, times) {
   renderCloud(ctx, CLOUD_X, CLOUD_Y, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X - SHADOW, CLOUD_Y - SHADOW, '#fff');
   ctx.fillStyle = '#000';
@@ -26,13 +36,19 @@ window.renderStatistics = function(ctx, players, times) {
   ctx.fillText('Ура вы победили!', CLOUD_X + 25, 20);
   ctx.fillText('Список результатов:', CLOUD_X + 25, 35);
 
-  var players = ['Вы', 'Кекс', 'Катя', 'Игорь'];
-  var randomNumberColor = Math.round(0 + (Math.random() * (255 - 0))) / i;
+  var maxTime = getMaxElement(times);
 
   for (var i = 0; i < players.length; i++) {
+    var randomNumberColor = Math.random() / 2 + 0.5;
+    var playerTime = times[i];
+
     ctx.fillStyle = '#000';
-    ctx.fillText(players[i] , CLOUD_X + BAR_WIDTH + (BAR_WIDTH + COLUMN_GAP) * i, CLOUD_Y + TEXT_POSITION + TEXT_GAP);
-    ctx.fillStyle = 'rgb(0, randomNumberColor / i, 255)';
-    ctx.fillRect(CLOUD_X + BAR_WIDTH + (BAR_WIDTH + COLUMN_GAP) * i, CLOUD_Y + TEXT_POSITION, BAR_WIDTH, BAR_HEIGHT);
+    ctx.fillText(Math.round(playerTime), CLOUD_X + BAR_WIDTH + (BAR_WIDTH + COLUMN_GAP) * i, (BAR_HEIGHT * times[i]) / maxTime + TEXT_POSITION - TEXT_GAP);
+    ctx.fillText(players[i], CLOUD_X + BAR_WIDTH + (BAR_WIDTH + COLUMN_GAP) * i, CLOUD_Y + TEXT_POSITION + TEXT_GAP);
+    ctx.fillStyle = 'rgba(0, 0, 255,' + randomNumberColor + ')';
+    if (players[i] === 'Вы') {
+      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
+    }
+    ctx.fillRect(CLOUD_X + BAR_WIDTH + (BAR_WIDTH + COLUMN_GAP) * i, CLOUD_Y + TEXT_POSITION, BAR_WIDTH, (BAR_HEIGHT * times[i]) / maxTime);
   }
 };
