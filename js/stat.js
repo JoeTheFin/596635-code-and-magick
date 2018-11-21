@@ -45,10 +45,7 @@ window.renderStatistics = function (ctx, players, times) {
     ctx.fillStyle = '#000';
     ctx.fillText(Math.round(playerTime), CLOUD_X + BAR_WIDTH + (BAR_WIDTH + COLUMN_GAP) * i, (BAR_HEIGHT * times[i]) / maxTime + TEXT_POSITION - TEXT_GAP);
     ctx.fillText(players[i], CLOUD_X + BAR_WIDTH + (BAR_WIDTH + COLUMN_GAP) * i, CLOUD_Y + TEXT_POSITION + TEXT_GAP);
-    ctx.fillStyle = 'rgba(0, 0, 255,' + randomNumberColor + ')';
-    if (players[i] === 'Вы') {
-      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-    }
+    ctx.fillStyle = players[i] === 'Вы' ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 0, 255,' + randomNumberColor + ')';
     ctx.fillRect(CLOUD_X + BAR_WIDTH + (BAR_WIDTH + COLUMN_GAP) * i, CLOUD_Y + TEXT_POSITION, BAR_WIDTH, (BAR_HEIGHT * times[i]) / maxTime);
   }
 };
