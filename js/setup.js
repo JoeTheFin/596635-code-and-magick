@@ -1,7 +1,8 @@
 'use strict';
 
-var setupDiv = document.querySelector('setup');
+var setupDiv = document.querySelector('.setup');
 setupDiv.classList.remove('hidden');
+var setupSimilar = document.querySelector('.setup-similar-list');
 
 var NAME_MAG = [
   'Иван',
@@ -86,3 +87,5 @@ var createSimilarWizard = function (array) {
 
 var exampleArray = getExampleArray(numberPins);
 createSimilarWizard(exampleArray);
+
+setupSimilar.classList.remove('hidden');
