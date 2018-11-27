@@ -1,8 +1,12 @@
 'use strict';
 
-var setupDiv = document.querySelector('.setup');
-setupDiv.classList.remove('hidden');
-var setupSimilar = document.querySelector('.setup-similar-list');
+var setup = document.querySelector('.setup');
+setup.classList.remove('hidden');
+var setupSimilar = document.querySelector('.setup-similar');
+var setupSimilarList = document.querySelector('.setup-similar-list');
+var templateWizard = document.querySelector('#similar-wizard-template')
+    .content
+    .querySelector('.setup-similar-item');
 
 var NAME_MAG = [
   'Иван',
@@ -43,7 +47,7 @@ var EYES_MAG = [
   'green'
 ];
 
-var numberPins = 8;
+var numberWizards = 8;
 var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
@@ -59,33 +63,34 @@ var getExampleArray = function (number) {
   }
 };
 
-var templateWizard = document.querySelector('#similar-wizard-template');
-var setupSimilarList = document.querySelector('.setup-similar-list');
+var randomWizardOption = getExampleArray(numberWizards);
 
-var renderSimilarWizard = function (array) {
+var renderSimilarWizard = function (arrayWizards) {
   var wizardElement = templateWizard.cloneNode(true);
 
-  wizardElement.querySelector('.setup-similar-label').textContent = array.name;
+  wizardElement.querySelector('.setup-similar-label').textContent = arrayWizards.name;
 
   var wizardCoatFill = wizardElement.querySelector('#wizard-coat');
-  wizardCoatFill.fill = array.coatColor;
+  wizardCoatFill.style.fill = arrayWizards.coatColor;
 
   var wizardEyesFill = wizardElement.querySelector('#wizard-eyes');
-  wizardEyesFill.fill = array.eyesColor;
+  wizardEyesFill.style.fill = arrayWizards.eyesColor;
+
+  return wizardElement;
 };
 
-var createSimilarWizard = function (array) {
-  var wizardFragment = Document.createDocumentFragment();
+var createSimilarWizard = function (arrayWizards) {
+  var wizardFragment = document.createDocumentFragment();
 
-  for (var i = 0; i < array.length - 1; i++) {
-    var resultWizard = renderSimilarWizard(array[i]);
+  for (var i = 0; i < arrayWizards.length; i++) {
+    var resultWizard = renderSimilarWizard(arrayWizards[i]);
     wizardFragment.appendChild(resultWizard);
   }
 
   setupSimilarList.appendChild(wizardFragment);
 };
 
-var exampleArray = getExampleArray(numberPins);
-createSimilarWizard(exampleArray);
+renderSimilarWizard(randomWizardOption);
+createSimilarWizard(randomWizardOption);
 
 setupSimilar.classList.remove('hidden');
