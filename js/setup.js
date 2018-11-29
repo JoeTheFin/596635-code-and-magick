@@ -39,6 +39,9 @@ var EYES_MAG = [
   'green'
 ];
 
+var ESC_KEY = 27;
+var ENTER_KEY = 13;
+
 var numberWizards = 4;
 var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -59,7 +62,52 @@ var getExampleArray = function (number) {
 var randomWizardOption = getExampleArray(numberWizards);
 
 var setup = document.querySelector('.setup');
-setup.classList.remove('hidden');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setup.querySelector('.setup-close');
+var icon = document.querySelector('.setup-open-icon');
+var data = setup.querySelector('.setup-user-name');
+var save = setup.querySelector('.setup-submit');
+var form = setup.querySelector('.setup-wizard-form');
+
+setupOpen.addEventListener('click', function () {
+  setup.classList.remove('hidden');
+});
+
+icon.addEventListener('focus', function () {
+  icon.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEY) {
+      setup.classList.remove('hidden');
+    }
+  });
+});
+
+setupClose.addEventListener('click', function () {
+  setup.classList.add('hidden');
+});
+
+setupClose.addEventListener('focus', function () {
+  setupClose.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEY) {
+      setup.classList.add('hidden');
+    }
+  });
+});
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ESC_KEY && document.activeElement !== data) {
+    setup.classList.add('hidden');
+  }
+});
+
+save.addEventListener('focus', function () {
+  save.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEY) {
+      // eslint-disable-next-line no-unused-expressions
+      form.submit;
+    }
+  });
+});
+
 var setupSimilar = setup.querySelector('.setup-similar');
 var setupSimilarList = document.querySelector('.setup-similar-list');
 var templateWizard = document.querySelector('#similar-wizard-template');
@@ -92,7 +140,6 @@ var createSimilarWizard = function (arrayWizards) {
   return wizardFragment;
 };
 
-renderSimilarWizard(randomWizardOption);
 createSimilarWizard(randomWizardOption);
 
 setupSimilar.classList.remove('hidden');
