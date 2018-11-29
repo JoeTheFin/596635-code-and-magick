@@ -39,6 +39,14 @@ var EYES_MAG = [
   'green'
 ];
 
+var FIREBALLS_COLORS = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+];
+
 var ESC_KEY = 27;
 var ENTER_KEY = 13;
 
@@ -68,6 +76,10 @@ var icon = document.querySelector('.setup-open-icon');
 var data = setup.querySelector('.setup-user-name');
 var save = setup.querySelector('.setup-submit');
 var form = setup.querySelector('.setup-wizard-form');
+var setupSimilar = setup.querySelector('.setup-similar');
+var setupSimilarList = document.querySelector('.setup-similar-list');
+var templateWizard = document.querySelector('#similar-wizard-template');
+var templateWizardItem = templateWizard.content.querySelector('.setup-similar-item');
 
 setupOpen.addEventListener('click', function () {
   setup.classList.remove('hidden');
@@ -108,10 +120,25 @@ save.addEventListener('focus', function () {
   });
 });
 
-var setupSimilar = setup.querySelector('.setup-similar');
-var setupSimilarList = document.querySelector('.setup-similar-list');
-var templateWizard = document.querySelector('#similar-wizard-template');
-var templateWizardItem = templateWizard.content.querySelector('.setup-similar-item');
+var changeWizardAttributes = function (element, input, cssProperty, array) {
+  element.addEventListener('click', function () {
+    var color = array[getRandomInt(0, array.length)];
+    element.style[cssProperty] = color;
+    input.value = color;
+  });
+};
+
+var setupWizardCoat = setup.querySelector('.wizard-coat');
+var setupWizardCoatInput = setup.querySelector('input[name = coat-color]');
+changeWizardAttributes(setupWizardCoat, setupWizardCoatInput, 'fill', COLOR_MAG);
+
+var setupWizardEyes = setup.querySelector('.wizard-eyes');
+var setupWizardEyesInput = setup.querySelector('input[name = eyes-color]');
+changeWizardAttributes(setupWizardEyes, setupWizardEyesInput, 'fill', EYES_MAG);
+
+var setupFireball = setup.querySelector('.setup-fireball-wrap');
+var setupFireballInput = setup.querySelector('input[name = fireball-color]');
+changeWizardAttributes(setupFireball, setupFireballInput, 'backgroundColor', FIREBALLS_COLORS);
 
 var renderSimilarWizard = function (arrayWizards) {
   var wizardElement = templateWizardItem.cloneNode(true);
