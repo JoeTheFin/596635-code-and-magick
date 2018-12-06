@@ -83,6 +83,7 @@ var templateWizardItem = templateWizard.content.querySelector('.setup-similar-it
 
 setupOpen.addEventListener('click', function () {
   setup.classList.remove('hidden');
+  setup.style = '';
 });
 
 icon.addEventListener('focus', function () {
