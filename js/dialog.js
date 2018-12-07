@@ -42,7 +42,7 @@
 
   icon.addEventListener('focus', function () {
     icon.addEventListener('keydown', function (evt) {
-      window.util.isEnterEvent (evt, popupOpen);
+      window.util.isEnterEvent(evt, popupOpen);
     });
   });
 
@@ -52,7 +52,7 @@
 
   setupClose.addEventListener('focus', function () {
     setupClose.addEventListener('keydown', function (evt) {
-      window.util.isEnterEvent (evt, popupClose);
+      window.util.isEnterEvent(evt, popupClose);
     });
   });
 
@@ -64,7 +64,7 @@
 
   save.addEventListener('focus', function () {
     save.addEventListener('keydown', function (evt) {
-      if (window.util.isEnterEvent (evt)) {
+      if (window.util.isEnterEvent(evt)) {
         // eslint-disable-next-line no-unused-expressions
         form.submit;
       }
