@@ -5,6 +5,9 @@
   var ENTER_KEY = 13;
 
   window.util = {
+    ESC_KEY: 27,
+    ENTER_KEY: 13,
+
     isEscEvent: function (evt, action) {
       if (evt.keyCode === ESC_KEY) {
         action();

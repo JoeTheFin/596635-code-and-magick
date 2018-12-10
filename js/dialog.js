@@ -56,10 +56,12 @@
     });
   });
 
-  data.addEventListener('keydown', function (evt) {
-    if (window.util.isEscEvent(evt)) {
-      evt.stopPropagation();
-    }
+  data.addEventListener('focus', function () {
+    document.addEventListener('keydown', function (evt) {
+      if (window.util.isEscEvent(evt, popupClose)) {
+        evt.stopPropagation();
+      }
+    });
   });
 
   save.addEventListener('focus', function () {
