@@ -13,15 +13,21 @@
         action();
       }
     },
-
     isEnterEvent: function (evt, action) {
       if (evt.keyCode === ENTER_KEY) {
         action();
       }
     },
-
     getRandomInt: function (min, max) {
       return Math.floor(Math.random() * (max - min)) + min;
+    },
+    createArrayFromRandomParts: function (arr) {
+      var arrayExample = [];
+      arrayExample.length = this.getRandomInt(0, arr.length + 1);
+      for (var i = 0; i < arrayExample.length; i++) {
+        arrayExample[i] = arr[i];
+      }
+      return arrayExample;
     }
   };
 })();
