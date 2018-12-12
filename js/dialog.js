@@ -19,31 +19,32 @@
       setup.classList.remove('hidden');
       document.addEventListener('keydown', onPopupEscPress);
 
-      setupWizardCoat.addEventListener('click', changeWizardAttributes);
-      setupWizardEyes.addEventListener('click', changeWizardAttributes);
-      setupFireball.addEventListener('click', changeWizardAttributes);
-
       setup.style = '';
     }
   };
 
   var popupClose = function () {
+    if (document.activeElement === data) {
+      return;
+    }
     setup.classList.add('hidden');
     document.removeEventListener('keydown', onPopupEscPress);
-
-    setupWizardCoat.removeEventListener('click', changeWizardAttributes);
-    setupWizardEyes.removeEventListener('click', changeWizardAttributes);
-    setupFireball.removeEventListener('click', changeWizardAttributes);
   };
 
   setupOpen.addEventListener('click', function () {
     popupOpen();
   });
 
+  var hundlerEnterOpen = function (evt) {
+    window.util.isEnterEvent(evt, popupOpen);
+  };
+
   icon.addEventListener('focus', function () {
-    icon.addEventListener('keydown', function (evt) {
-      window.util.isEnterEvent(evt, popupOpen);
-    });
+    icon.addEventListener('keydown', hundlerEnterOpen);
+  });
+
+  icon.addEventListener('blur', function () {
+    icon.removeEventListener('keydown', hundlerEnterOpen);
   });
 
   setupClose.addEventListener('click', function () {
@@ -56,17 +57,10 @@
     });
   });
 
-  data.addEventListener('keydown', function (evt) {
-    if (window.util.isEscEvent(evt)) {
-      evt.stopPropagation();
-    }
-  });
-
   save.addEventListener('focus', function () {
     save.addEventListener('keydown', function (evt) {
       if (window.util.isEnterEvent(evt)) {
-        // eslint-disable-next-line no-unused-expressions
-        form.submit;
+        form.submit();
       }
     });
   });
