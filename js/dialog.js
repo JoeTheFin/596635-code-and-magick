@@ -19,10 +19,6 @@
       setup.classList.remove('hidden');
       document.addEventListener('keydown', onPopupEscPress);
 
-      setupWizardCoat.addEventListener('click', changeWizardAttributes);
-      setupWizardEyes.addEventListener('click', changeWizardAttributes);
-      setupFireball.addEventListener('click', changeWizardAttributes);
-
       setup.style = '';
     }
   };
