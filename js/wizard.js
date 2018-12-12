@@ -10,17 +10,15 @@
   var form = setup.querySelector('.setup-wizard-form');
 
   var renderSimilarWizard = function (arrayWizards) {
-    var wizardElement = templateWizardItem.cloneNode(true);
-    var sortWizard = window.util.createArrayFromRandomParts(arrayWizards);
 
-    wizardElement.querySelector('.setup-similar-label').textContent = sortWizard.name;
+    var wizardElement = templateWizardItem.cloneNode(true);
+    wizardElement.querySelector('.setup-similar-label').textContent = arrayWizards.name;
 
     var wizardCoatFill = wizardElement.querySelector('.wizard-coat');
-    wizardCoatFill.style.fill = sortWizard.colorCoat;
+    wizardCoatFill.style.fill = arrayWizards.colorCoat;
 
     var wizardEyesFill = wizardElement.querySelector('.wizard-eyes');
-    wizardEyesFill.style.fill = sortWizard.colorEyes;
-
+    wizardEyesFill.style.fill = arrayWizards.colorEyes;
     return wizardElement;
   };
 
@@ -36,8 +34,8 @@
     return wizardFragment;
   };
 
-  var successHandler = function (arrayWizards) {
-    createSimilarWizard(arrayWizards);
+  var successHandler = function (wizards) {
+    createSimilarWizard(wizards);
   };
 
   var errorHandler = function (errorMessage) {
