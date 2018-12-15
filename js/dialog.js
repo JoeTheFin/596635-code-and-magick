@@ -65,21 +65,24 @@
     });
   });
 
-  var changeWizardAttributes = function (element, input, cssProperty, array) {
+  var changeWizardAttributes = function (element, input, cssProperty, array, onChangeCallback) {
     element.addEventListener('click', function () {
       var color = array[window.util.getRandomInt(0, array.length)];
       element.style[cssProperty] = color;
       input.value = color;
+      if (onChangeCallback !== null) {
+        onChangeCallback(color);
+      }
     });
   };
 
   var setupWizardCoat = setup.querySelector('.wizard-coat');
   var setupWizardCoatInput = setup.querySelector('input[name = coat-color]');
-  changeWizardAttributes(setupWizardCoat, setupWizardCoatInput, 'fill', window.color.COLOR_MAG);
+  changeWizardAttributes(setupWizardCoat, setupWizardCoatInput, 'fill', window.color.COLOR_MAG, window.wizard.onCoatChange);
 
   var setupWizardEyes = setup.querySelector('.wizard-eyes');
   var setupWizardEyesInput = setup.querySelector('input[name = eyes-color]');
-  changeWizardAttributes(setupWizardEyes, setupWizardEyesInput, 'fill', window.color.EYES_MAG);
+  changeWizardAttributes(setupWizardEyes, setupWizardEyesInput, 'fill', window.color.EYES_MAG, window.wizard.onEyesChange);
 
   var setupFireball = setup.querySelector('.setup-fireball-wrap');
   var setupFireballInput = setup.querySelector('input[name = fireball-color]');
