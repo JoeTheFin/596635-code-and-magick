@@ -1,41 +1,46 @@
 'use strict';
 (function () {
-  var SIMILAR_WIZARDS_NUMBER = 4;
-
   var setup = document.querySelector('.setup');
-  var templateWizard = document.querySelector('#similar-wizard-template');
-  var templateWizardItem = templateWizard.content.querySelector('.setup-similar-item');
-  var setupSimilar = setup.querySelector('.setup-similar');
-  var setupSimilarList = document.querySelector('.setup-similar-list');
   var form = setup.querySelector('.setup-wizard-form');
+  var wizards = [];
+  var coatColor;
+  var eyesColor;
 
-  var renderSimilarWizard = function (arrayWizards) {
-
-    var wizardElement = templateWizardItem.cloneNode(true);
-    wizardElement.querySelector('.setup-similar-label').textContent = arrayWizards.name;
-
-    var wizardCoatFill = wizardElement.querySelector('.wizard-coat');
-    wizardCoatFill.style.fill = arrayWizards.colorCoat;
-
-    var wizardEyesFill = wizardElement.querySelector('.wizard-eyes');
-    wizardEyesFill.style.fill = arrayWizards.colorEyes;
-    return wizardElement;
-  };
-
-  var createSimilarWizard = function (arrayWizards) {
-    var wizardFragment = document.createDocumentFragment();
-
-    for (var i = 0; i < SIMILAR_WIZARDS_NUMBER; i++) {
-      var resultWizard = renderSimilarWizard(arrayWizards[i]);
-      wizardFragment.appendChild(resultWizard);
+  var getRank = function (wizard) {
+    var rank = 0;
+    if (wizard.colorCoat === coatColor) {
+      rank += 2;
     }
-
-    setupSimilarList.appendChild(wizardFragment);
-    return wizardFragment;
+    if (wizard.colorEyes === eyesColor) {
+      rank += 1;
+    }
+    return rank;
   };
 
-  var successHandler = function (wizards) {
-    createSimilarWizard(wizards);
+  var updateWizards = function () {
+    window.render(wizards.slice().
+      sort(function (left, right) {
+        var rankDiff = getRank(right) - getRank(left);
+        if (rankDiff === 0) {
+          rankDiff = wizards.indexOf(left) - wizards.indexOf(right);
+        }
+        return rankDiff;
+      }));
+  };
+
+  window.wizard.onEyesChange = function (color) {
+    eyesColor = color;
+    window.debounce(updateWizards);
+  };
+
+  window.wizard.onCoatChange = function (color) {
+    coatColor = color;
+    window.debounce(updateWizards);
+  };
+
+  var successHandler = function (data) {
+    wizards = data;
+    window.render(wizards);
   };
 
   var errorHandler = function (errorMessage) {
@@ -52,8 +57,6 @@
   };
 
   window.backend.load(successHandler, errorHandler);
-
-  setupSimilar.classList.remove('hidden');
 
   form.addEventListener('submit', function (evt) {
     window.backend.save(new FormData(form), function () {

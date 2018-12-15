@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var COLOR_MAG = [
+  var COLOR_COAT = [
     'rgb(101, 137, 164)',
     'rgb(241, 43, 107)',
     'rgb(146, 100, 161)',
@@ -27,7 +27,7 @@
   ];
 
   window.color = {
-    COLOR_MAG: COLOR_MAG,
+    COLOR_MAG: COLOR_COAT,
     EYES_MAG: EYES_MAG,
     FIREBALLS_COLORS: FIREBALLS_COLORS
   };
